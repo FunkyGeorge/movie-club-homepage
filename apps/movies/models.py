@@ -30,9 +30,7 @@ class Movie(models.Model):
         old_tmdb_id = None
         if self.pk:
             old_tmdb_id = (
-                type(self).objects.filter(pk=self.pk)
-                .values_list("tmdb_id", flat=True)
-                .first()
+                type(self).objects.filter(pk=self.pk).values_list("tmdb_id", flat=True).first()
             )
 
         super().save(*args, **kwargs)

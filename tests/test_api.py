@@ -66,9 +66,7 @@ def test_missing_idempotency_key_is_rejected(client, db, payload, bot_headers):
 
 
 @respx.mock
-def test_create_week_matches_tmdb(
-    client, db, tmdb_settings, bot_headers, payload
-):
+def test_create_week_matches_tmdb(client, db, tmdb_settings, bot_headers, payload):
     mock_matrix_match()
 
     response = post_week(client, payload, bot_headers)
@@ -89,9 +87,7 @@ def test_create_week_matches_tmdb(
 
 
 @respx.mock
-def test_duplicate_key_returns_existing_week(
-    client, db, tmdb_settings, bot_headers, payload
-):
+def test_duplicate_key_returns_existing_week(client, db, tmdb_settings, bot_headers, payload):
     mock_matrix_match()
 
     first = post_week(client, payload, bot_headers)
@@ -125,12 +121,8 @@ def test_duplicate_key_with_different_payload_conflicts(
 
 
 @respx.mock
-def test_unmatched_title_creates_week(
-    client, db, tmdb_settings, bot_headers, payload
-):
-    respx.get(TMDB_SEARCH_URL).mock(
-        return_value=Response(200, json={"results": []})
-    )
+def test_unmatched_title_creates_week(client, db, tmdb_settings, bot_headers, payload):
+    respx.get(TMDB_SEARCH_URL).mock(return_value=Response(200, json={"results": []}))
 
     response = post_week(client, payload, bot_headers)
 
@@ -142,9 +134,7 @@ def test_unmatched_title_creates_week(
 
 
 @respx.mock
-def test_tmdb_failure_still_creates_week(
-    client, db, tmdb_settings, bot_headers, payload
-):
+def test_tmdb_failure_still_creates_week(client, db, tmdb_settings, bot_headers, payload):
     respx.get(TMDB_SEARCH_URL).mock(return_value=Response(500))
 
     response = post_week(client, payload, bot_headers)
@@ -158,9 +148,7 @@ def test_tmdb_failure_still_creates_week(
 
 
 @respx.mock
-def test_retry_after_tmdb_failure_reenriches(
-    client, db, tmdb_settings, bot_headers, payload
-):
+def test_retry_after_tmdb_failure_reenriches(client, db, tmdb_settings, bot_headers, payload):
     respx.get(TMDB_SEARCH_URL).mock(return_value=Response(500))
     first = post_week(client, payload, bot_headers)
     assert first.status_code == 201

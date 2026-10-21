@@ -31,7 +31,6 @@ class MovieAdmin(admin.ModelAdmin):
 
         self.message_user(
             request,
-            f"Sync complete: {succeeded} succeeded, {failed} failed. "
-            "See sync_error for details.",
+            f"Sync complete: {succeeded} succeeded, {failed} failed. See sync_error for details.",
             level=messages.INFO,
         )

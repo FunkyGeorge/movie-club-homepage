@@ -9,6 +9,7 @@
 # Makefile), in which case you do not need to import this module.
 { pkgs, ... }:
 {
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   programs.nix-ld.enable = true;
 
   services.postgresql = {

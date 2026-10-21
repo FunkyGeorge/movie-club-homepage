@@ -9,9 +9,7 @@ from .models import Member, Week
 
 @admin.register(Member)
 class MemberAdmin(UserAdmin):
-    fieldsets = UserAdmin.fieldsets + (
-        ("Discord", {"fields": ("discord_id", "display_name")}),
-    )
+    fieldsets = UserAdmin.fieldsets + (("Discord", {"fields": ("discord_id", "display_name")}),)
     add_fieldsets = UserAdmin.add_fieldsets + (
         ("Discord", {"fields": ("discord_id", "display_name")}),
     )
@@ -43,7 +41,7 @@ class WeekAdmin(admin.ModelAdmin):
             try:
                 movie = resolve_movie(week.title)
             except TMDBError as exc:
-                week.movie = None
+                # Keep any existing match on a transient TMDB failure.
                 week.match_status = Week.MatchStatus.ERROR
                 week.match_error = str(exc)
                 errors += 1

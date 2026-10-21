@@ -14,6 +14,18 @@ uv venv --python "$(which python3.12)"
 uv sync
 ```
 
+If flakes are not enabled, add this to `~/.config/nix/nix.conf`:
+
+```ini
+experimental-features = nix-command flakes
+```
+
+or invoke Nix with the flags explicitly:
+
+```bash
+nix --extra-experimental-features 'nix-command flakes' develop
+```
+
 `UV_PYTHON_DOWNLOADS=never` is set in the dev shell, so `uv` uses the Nix
 Python instead of downloading its own.
 
@@ -47,6 +59,9 @@ sudo -u postgres psql -c 'ALTER ROLE george CREATEDB;'
 DB_HOST=/run/postgresql
 DB_PORT=5432
 ```
+
+With Option B, run Django commands directly (`uv run python manage.py ...`)
+instead of the `db-*` Make targets, which manage the project-local cluster.
 
 ## Configuration
 

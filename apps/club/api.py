@@ -32,7 +32,11 @@ def _authenticate(request: HttpRequest) -> bool:
         return False
 
     scheme, _, token = request.headers.get("Authorization", "").partition(" ")
-    if scheme.lower() != "bearer" or not token:
+    if scheme.lower() != "bearer":
+        return False
+
+    token = token.strip()
+    if not token:
         return False
 
     return secrets.compare_digest(token, configured)
@@ -43,10 +47,7 @@ def _normalize_title(title: str) -> str:
 
 
 def _payload_matches(week: Week, title: str, discord_id: str) -> bool:
-    return (
-        week.title.casefold() == title.casefold()
-        and week.selected_by.discord_id == discord_id
-    )
+    return week.title.casefold() == title.casefold() and week.selected_by.discord_id == discord_id
 
 
 def _serialize_week(week: Week, *, replay: bool = False) -> dict:
@@ -85,7 +86,7 @@ def _enrich_week(week: Week) -> None:
     try:
         movie = resolve_movie(week.title)
     except TMDBError as exc:
-        week.movie = None
+        # Keep any existing match on a transient TMDB failure.
         week.match_status = Week.MatchStatus.ERROR
         week.match_error = str(exc)
     else:
@@ -190,6 +191,11 @@ def create_week(request: HttpRequest) -> JsonResponse:
                 409,
                 week_id=week.id,
             )
+
+        if week.match_status in (Week.MatchStatus.PENDING, Week.MatchStatus.ERROR):
+            _enrich_week(week)
+            week = _get_week(week.id)
+
         return JsonResponse(_serialize_week(week, replay=True), status=200)
 
     _enrich_week(week)

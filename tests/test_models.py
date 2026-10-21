@@ -15,9 +15,7 @@ def tmdb_settings(settings):
 @respx.mock
 def test_changing_tmdb_id_refreshes_genres(db, tmdb_settings):
     # bulk_create bypasses Movie.save(), so this row starts without a sync.
-    movie = Movie.objects.bulk_create(
-        [Movie(tmdb_id=1, title="Wrong title")]
-    )[0]
+    movie = Movie.objects.bulk_create([Movie(tmdb_id=1, title="Wrong title")])[0]
 
     respx.get(TMDB_MOVIE_603_URL).mock(
         return_value=Response(

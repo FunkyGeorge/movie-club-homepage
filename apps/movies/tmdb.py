@@ -31,9 +31,7 @@ def _get(path: str, params: dict[str, Any] | None = None) -> dict[str, Any]:
             response = client.get(url, params=params)
             response.raise_for_status()
     except httpx.HTTPStatusError as exc:
-        raise TMDBError(
-            f"TMDB returned {exc.response.status_code} for {path}"
-        ) from exc
+        raise TMDBError(f"TMDB returned {exc.response.status_code} for {path}") from exc
     except httpx.HTTPError as exc:
         raise TMDBError(f"TMDB request failed: {exc}") from exc
 
