@@ -1,0 +1,12 @@
+.venv/
+.env
+.direnv/
+.pgdata/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+staticfiles/
+media/
+.coverage
+htmlcov/
