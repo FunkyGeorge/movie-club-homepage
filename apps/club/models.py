@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -18,6 +19,9 @@ class Week(models.Model):
         ERROR = "error", "Error"
 
     title = models.CharField(max_length=255)
+    starts_on = models.DateField(null=True, blank=True, db_index=True)
+    ends_on = models.DateField(null=True, blank=True)
+    period_label = models.CharField(max_length=255, blank=True, default="")
     selected_by = models.ForeignKey(Member, on_delete=models.PROTECT, related_name="weeks")
     movie = models.ForeignKey(
         "movies.Movie",
@@ -33,13 +37,20 @@ class Week(models.Model):
     )
     match_error = models.TextField(blank=True, default="")
     idempotency_key = models.CharField(max_length=64, unique=True, null=True, blank=True)
+    import_key = models.CharField(max_length=64, unique=True, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ["-created_at"]
 
+    def clean(self) -> None:
+        super().clean()
+        if self.starts_on and self.ends_on and self.ends_on < self.starts_on:
+            raise ValidationError({"ends_on": "End date cannot be before start date."})
+
     def __str__(self) -> str:
-        if not self.created_at:
-            return self.title
-        return f"{self.title} ({self.created_at:%Y-%m-%d})"
+        when = self.starts_on
+        if when is None and self.created_at:
+            when = self.created_at.date()
+        return f"{self.title} ({when})" if when else self.title

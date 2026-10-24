@@ -17,6 +17,7 @@
               python312
               uv
               postgresql_16
+              gnumake
               git
               curl
               jq

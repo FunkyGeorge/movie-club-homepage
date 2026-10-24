@@ -10,10 +10,8 @@ from django.http import HttpRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 
-from apps.movies.sync import resolve_movie
-from apps.movies.tmdb import TMDBError
-
 from .models import Member, Week
+from .services import enrich_week
 
 logger = logging.getLogger(__name__)
 
@@ -55,6 +53,9 @@ def _serialize_week(week: Week, *, replay: bool = False) -> dict:
     return {
         "id": week.id,
         "title": week.title,
+        "starts_on": week.starts_on.isoformat() if week.starts_on else None,
+        "ends_on": week.ends_on.isoformat() if week.ends_on else None,
+        "period_label": week.period_label,
         "selected_by": {
             "discord_id": week.selected_by.discord_id,
             "display_name": week.selected_by.display_name,
@@ -80,25 +81,6 @@ def _get_week(week_id: int) -> Week:
         .prefetch_related("movie__genres")
         .get(pk=week_id)
     )
-
-
-def _enrich_week(week: Week) -> None:
-    try:
-        movie = resolve_movie(week.title)
-    except TMDBError as exc:
-        # Keep any existing match on a transient TMDB failure.
-        week.match_status = Week.MatchStatus.ERROR
-        week.match_error = str(exc)
-    else:
-        week.movie = movie
-        if movie is None:
-            week.match_status = Week.MatchStatus.UNMATCHED
-            week.match_error = ""
-        else:
-            week.match_status = Week.MatchStatus.MATCHED
-            week.match_error = ""
-
-    week.save(update_fields=["movie", "match_status", "match_error", "updated_at"])
 
 
 @csrf_exempt
@@ -157,7 +139,7 @@ def create_week(request: HttpRequest) -> JsonResponse:
             )
 
         if existing.match_status in (Week.MatchStatus.PENDING, Week.MatchStatus.ERROR):
-            _enrich_week(existing)
+            enrich_week(existing)
             existing = _get_week(existing.id)
 
         return JsonResponse(_serialize_week(existing, replay=True), status=200)
@@ -193,12 +175,12 @@ def create_week(request: HttpRequest) -> JsonResponse:
             )
 
         if week.match_status in (Week.MatchStatus.PENDING, Week.MatchStatus.ERROR):
-            _enrich_week(week)
+            enrich_week(week)
             week = _get_week(week.id)
 
         return JsonResponse(_serialize_week(week, replay=True), status=200)
 
-    _enrich_week(week)
+    enrich_week(week)
     week = _get_week(week.id)
     return JsonResponse(_serialize_week(week), status=201)
 

@@ -119,6 +119,77 @@ Response statuses:
 `match_status` is `matched`, `unmatched`, or `error`. A TMDB failure still
 creates the week so the club can fix it later.
 
+## Bulk import
+
+Historical choices can be imported from a CSV with `start`, `end`, `selector`,
+and `title` columns:
+
+```csv
+start,end,selector,title
+12-25,12-31,George,Die Hard
+01-01,01-07,Alex,The Matrix
+```
+
+Rows must be in chronological order. Because the dates do not include a year,
+the importer needs a starting year:
+
+```bash
+uv run python manage.py import_weeks choices.csv \
+  --start-year 2023 \
+  --dry-run
+```
+
+The dry run validates every row and prints the inferred year boundaries,
+members that would be created, and how many weeks are new. Once the plan looks
+right, run it without `--dry-run`:
+
+```bash
+uv run python manage.py import_weeks choices.csv --start-year 2023
+```
+
+The importer automatically rolls the year forward when the month/day sequence
+wraps, e.g. `12-29` followed by `01-05`, and handles weeks that cross New Year.
+If the history has large gaps or skipped years, add a `year` column so the
+years are explicit.
+
+A `year` column is also accepted and overrides `--start-year` for that row:
+
+```csv
+year,start,end,selector,title
+2024,01-01,01-07,George,The Matrix
+```
+
+Supported date formats include `YYYY-MM-DD`, `MM/DD`, `MM-DD`, `Jan 5`,
+`January 5`, and common variants. Use `--date-format` if your source uses
+something ambiguous such as `DD/MM`:
+
+```bash
+uv run python manage.py import_weeks choices.csv \
+  --start-year 2023 \
+  --date-format '%d/%m'
+```
+
+Other useful options:
+
+- `--member-map members.csv` maps source names to existing display names.
+  The map needs `source,target` columns.
+- `--skip-tmdb` imports the rows without calling TMDB.
+- `--delimiter` and `--encoding` support non-comma or non-UTF-8 exports.
+
+Imported selectors that do not match an existing `Member.display_name` get a
+legacy member with no Discord ID. They can be linked later.
+
+Imports are idempotent: each row gets an `import_key`, so rerunning the same CSV
+skips existing rows. If TMDB is not configured, imported weeks are left
+`pending`; add the token and run:
+
+```bash
+uv run python manage.py enrich_weeks
+```
+
+Use `enrich_weeks --all` to re-run matching for every week, or
+`enrich_weeks --dry-run` to see how many weeks would be processed.
+
 ## Admin
 
 Create a superuser:
@@ -132,6 +203,7 @@ Then visit `http://127.0.0.1:8000/admin/`.
 - Edit a `Movie`'s TMDB ID to trigger a metadata and genre refresh.
 - Use the `Week` action **Re-run TMDB search** if the original match was wrong.
 - Use the `Movie` action **Re-sync metadata and genres from TMDB** to retry.
+- Imported weeks show their historical `starts_on` / `ends_on` dates.
 
 ## Tests and checks
 
@@ -146,9 +218,9 @@ Tests use the local Postgres cluster and mock TMDB with `respx`.
 
 ```
 config/          Django settings, URLs, WSGI/ASGI
-apps/club/       Member, Week, API endpoint, admin
+apps/club/       Member, Week, API endpoint, import/enrich commands, admin
 apps/movies/     Movie, Genre, TMDB client and sync
-tests/           API and model tests
+tests/           API, model, and import tests
 nix/system.nix   Optional NixOS module
 flake.nix        Development shell
 ```

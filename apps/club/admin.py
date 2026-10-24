@@ -1,10 +1,8 @@
 from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin
 
-from apps.movies.sync import resolve_movie
-from apps.movies.tmdb import TMDBError
-
 from .models import Member, Week
+from .services import enrich_week
 
 
 @admin.register(Member)
@@ -19,47 +17,51 @@ class MemberAdmin(UserAdmin):
 
 @admin.register(Week)
 class WeekAdmin(admin.ModelAdmin):
-    list_display = ("title", "selected_by", "movie", "match_status", "created_at")
+    list_display = (
+        "title",
+        "starts_on",
+        "ends_on",
+        "selected_by",
+        "movie",
+        "match_status",
+    )
     list_filter = ("match_status", "created_at")
+    date_hierarchy = "starts_on"
     search_fields = (
         "title",
+        "period_label",
+        "import_key",
         "selected_by__display_name",
         "selected_by__discord_id",
         "movie__title",
     )
     autocomplete_fields = ("selected_by", "movie")
-    readonly_fields = ("idempotency_key", "match_error", "created_at", "updated_at")
+    list_select_related = ("selected_by", "movie")
+    readonly_fields = (
+        "idempotency_key",
+        "import_key",
+        "match_error",
+        "created_at",
+        "updated_at",
+    )
     actions = ("rerun_tmdb_search",)
 
     @admin.action(description="Re-run TMDB search for selected weeks")
     def rerun_tmdb_search(self, request, queryset):
-        matched = 0
-        unmatched = 0
-        errors = 0
+        counts = {
+            Week.MatchStatus.MATCHED: 0,
+            Week.MatchStatus.UNMATCHED: 0,
+            Week.MatchStatus.ERROR: 0,
+        }
 
         for week in queryset.select_related("selected_by"):
-            try:
-                movie = resolve_movie(week.title)
-            except TMDBError as exc:
-                # Keep any existing match on a transient TMDB failure.
-                week.match_status = Week.MatchStatus.ERROR
-                week.match_error = str(exc)
-                errors += 1
-            else:
-                week.movie = movie
-                if movie is None:
-                    week.match_status = Week.MatchStatus.UNMATCHED
-                    week.match_error = ""
-                    unmatched += 1
-                else:
-                    week.match_status = Week.MatchStatus.MATCHED
-                    week.match_error = ""
-                    matched += 1
-
-            week.save(update_fields=["movie", "match_status", "match_error", "updated_at"])
+            enrich_week(week)
+            counts[week.match_status] = counts.get(week.match_status, 0) + 1
 
         self.message_user(
             request,
-            f"Re-search complete: {matched} matched, {unmatched} unmatched, {errors} errors.",
+            f"Re-search complete: {counts[Week.MatchStatus.MATCHED]} matched, "
+            f"{counts[Week.MatchStatus.UNMATCHED]} unmatched, "
+            f"{counts[Week.MatchStatus.ERROR]} errors.",
             level=messages.INFO,
         )
