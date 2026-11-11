@@ -1,0 +1,29 @@
+[Unit]
+Description=Movie Club Django application
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=movieclub
+Group=movieclub
+UMask=0027
+WorkingDirectory=/srv/movie-club
+EnvironmentFile=/etc/movieclub.env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/srv/movie-club/.venv/bin/gunicorn config.wsgi:application \
+    --bind 127.0.0.1:8000 \
+    --workers 3 \
+    --timeout 60 \
+    --access-logfile - \
+    --error-logfile -
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

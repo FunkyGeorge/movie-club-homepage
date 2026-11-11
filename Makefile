@@ -3,7 +3,7 @@ PGPORT ?= 5433
 DB_NAME ?= movieclub
 EXCLUDE ?=
 
-.PHONY: db-init db-start db-stop db-create migrate dev test lint fmt chart-genres chart-release-years chart-favorite-genres chart-genre-share public-charts
+.PHONY: db-init db-start db-stop db-create migrate dev test lint fmt sync sync-prod chart-genres chart-release-years chart-favorite-genres chart-genre-share public-charts
 
 db-init:
 	@test -d $(PGDATA) || initdb -D $(PGDATA) --auth=trust
@@ -34,6 +34,12 @@ lint:
 
 fmt:
 	ruff format .
+
+sync:
+	uv sync
+
+sync-prod:
+	uv sync --frozen --no-dev
 
 chart-genres: db-create
 	uv run python scripts/genre_pie_chart.py

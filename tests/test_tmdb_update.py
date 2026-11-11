@@ -8,9 +8,29 @@ from httpx import Response
 
 from apps.club.models import Week
 from apps.movies.models import Genre, Movie
+from apps.movies.tmdb import parse_movie_url
 
 TMDB_MOVIE_603_URL = "https://api.themoviedb.org/3/movie/603"
 TMDB_MOVIE_157336_URL = "https://api.themoviedb.org/3/movie/157336"
+
+
+@pytest.mark.parametrize(
+    ("url", "expected"),
+    [
+        ("https://www.themoviedb.org/movie/603-the-matrix", 603),
+        ("https://www.themoviedb.org/movie/603", 603),
+        ("http://themoviedb.org/movie/603-the-matrix/", 603),
+        ("https://www.themoviedb.org/movie/603-the-matrix?language=en-US", 603),
+        ("https://www.themoviedb.org/movie/603-the-matrix#cast", 603),
+        ("https://example.com/movie/603", None),
+        ("https://www.themoviedb.org/tv/1399", None),
+        ("https://www.themoviedb.org/person/123", None),
+        ("https://www.themoviedb.org/movie/not-an-id", None),
+        ("603", None),
+    ],
+)
+def test_parse_movie_url(url, expected):
+    assert parse_movie_url(url) == expected
 
 
 @pytest.fixture
@@ -77,7 +97,7 @@ def test_update_tmdb_reassigns_only_the_selected_week(client, arrival_week, tmdb
         reverse("update-tmdb"),
         {
             "week_id": arrival_week.pk,
-            "tmdb_id": 157336,
+            "tmdb_url": "https://www.themoviedb.org/movie/157336-interstellar",
             "redirect": "detail",
             "return_tmdb_id": 329865,
         },
@@ -126,7 +146,7 @@ def test_update_tmdb_reuses_an_existing_movie(client, arrival_week, tmdb_setting
         reverse("update-tmdb"),
         {
             "week_id": arrival_week.pk,
-            "tmdb_id": 603,
+            "tmdb_url": "https://www.themoviedb.org/movie/603-the-matrix",
             "redirect": "detail",
             "return_tmdb_id": 329865,
         },
@@ -154,7 +174,7 @@ def test_update_tmdb_failure_leaves_the_week_unchanged(client, arrival_week, tmd
         reverse("update-tmdb"),
         {
             "week_id": arrival_week.pk,
-            "tmdb_id": 999999,
+            "tmdb_url": "https://www.themoviedb.org/movie/999999-missing",
             "redirect": "detail",
             "return_tmdb_id": 329865,
         },
@@ -164,7 +184,7 @@ def test_update_tmdb_failure_leaves_the_week_unchanged(client, arrival_week, tmd
     assert response.status_code == 200
     arrival_week.refresh_from_db()
     assert arrival_week.movie_id == original_movie_id
-    assert "TMDB lookup failed" in response.content.decode()
+    assert "TMDB could not load that movie" in response.content.decode()
     assert not Movie.objects.filter(tmdb_id=999999).exists()
 
 
@@ -176,7 +196,7 @@ def test_update_tmdb_from_home_redirects_home(client, arrival_week, tmdb_setting
         reverse("update-tmdb"),
         {
             "week_id": arrival_week.pk,
-            "tmdb_id": 157336,
+            "tmdb_url": "https://www.themoviedb.org/movie/157336-interstellar",
             "redirect": "home",
         },
         follow=True,
@@ -195,7 +215,7 @@ def test_unmatched_week_can_be_matched_from_pick_page(client, unmatched_week, tm
         reverse("update-tmdb"),
         {
             "week_id": unmatched_week.pk,
-            "tmdb_id": 157336,
+            "tmdb_url": "https://www.themoviedb.org/movie/157336-interstellar",
             "redirect": "week",
         },
         follow=True,
@@ -220,46 +240,57 @@ def test_unmatched_week_error_returns_to_pick_page(client, unmatched_week, tmdb_
         reverse("update-tmdb"),
         {
             "week_id": unmatched_week.pk,
-            "tmdb_id": 999999,
+            "tmdb_url": "https://www.themoviedb.org/movie/999999-missing",
             "redirect": "week",
         },
         follow=True,
     )
 
     assert response.status_code == 200
-    assert response.redirect_chain[-1][0] == reverse("week-detail", args=[unmatched_week.pk])
+    assert response.redirect_chain[-1][0].split("?")[0] == reverse(
+        "week-detail", args=[unmatched_week.pk]
+    )
     unmatched_week.refresh_from_db()
     assert unmatched_week.movie_id is None
-    assert "TMDB lookup failed" in response.content.decode()
+    assert "TMDB could not load that movie" in response.content.decode()
 
 
 def test_movie_detail_and_home_show_the_tmdb_update_form(client, arrival_week):
     detail_response = client.get(reverse("movie-detail", args=[329865]))
     detail_content = detail_response.content.decode()
     assert detail_response.status_code == 200
-    assert "Wrong movie? Update TMDB ID" in detail_content
+    assert "Wrong movie? Update TMDB URL" in detail_content
+    assert 'name="tmdb_url"' in detail_content
     assert f'name="week_id" value="{arrival_week.pk}"' in detail_content
 
     home_response = client.get(reverse("home"))
     home_content = home_response.content.decode()
     assert home_response.status_code == 200
-    assert "Wrong movie? Update TMDB ID" in home_content
+    assert "Wrong movie? Update TMDB URL" in home_content
+    assert 'name="tmdb_url"' in home_content
     assert f'name="week_id" value="{arrival_week.pk}"' in home_content
 
 
-def test_invalid_tmdb_id_does_not_change_the_week(client, arrival_week):
+def test_invalid_tmdb_url_does_not_change_the_week(client, arrival_week):
     original_movie_id = arrival_week.movie_id
 
     response = client.post(
         reverse("update-tmdb"),
-        {"week_id": arrival_week.pk, "tmdb_id": "not-a-number"},
+        {
+            "week_id": arrival_week.pk,
+            "tmdb_url": "https://example.com/movie/603",
+            "redirect": "detail",
+            "return_tmdb_id": 329865,
+        },
         follow=True,
     )
 
     assert response.status_code == 200
     arrival_week.refresh_from_db()
     assert arrival_week.movie_id == original_movie_id
-    assert "Enter a numeric TMDB ID" in response.content.decode()
+    content = response.content.decode()
+    assert "Enter a full TMDB movie URL" in content
+    assert '<details class="tmdb-fix" open>' in content
 
 
 def test_update_tmdb_requires_post(client):

@@ -158,6 +158,7 @@ def test_unmatched_week_detail_shows_tmdb_form_without_chooser(client, public_da
     assert "Jan 1, 2021 – Jan 7, 2021" in content
     assert "This pick has not been matched to a TMDB movie yet" in content
     assert reverse("update-tmdb") in content
+    assert 'name="tmdb_url"' in content
     assert f'name="week_id" value="{hidden.pk}"' in content
     assert_no_member_identity(response)
 

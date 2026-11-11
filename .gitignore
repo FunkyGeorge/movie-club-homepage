@@ -10,3 +10,10 @@ staticfiles/
 media/
 .coverage
 htmlcov/
+/result
+/result-*
+backups/
+*.dump
+*.dump.age
+*.dump.gpg
+*.sql.gz

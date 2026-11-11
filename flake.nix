@@ -1,5 +1,5 @@
 {
-  description = "movie-club development environment";
+  description = "movie-club development and production runtime";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
@@ -8,6 +8,22 @@
       systems = [ "x86_64-linux" "aarch64-linux" ];
       eachSystem = nixpkgs.lib.genAttrs systems;
     in {
+      packages = eachSystem (system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+
+          runtime = pkgs.buildEnv {
+            name = "movie-club-runtime";
+            paths = with pkgs; [
+              python312
+              uv
+            ];
+          };
+        in {
+          default = runtime;
+          inherit runtime;
+        });
+
       devShells = eachSystem (system:
         let
           pkgs = import nixpkgs { inherit system; };
@@ -41,7 +57,7 @@
             };
 
             shellHook = ''
-              echo "movie-club dev shell"
+              echo "movie-club environment"
               echo "python: $(python3.12 --version)"
             '';
           };

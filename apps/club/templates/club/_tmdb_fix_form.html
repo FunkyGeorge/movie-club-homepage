@@ -1,11 +1,14 @@
 {% if week or weeks %}
-  <details class="tmdb-fix">
-    <summary class="button button-ghost">Wrong movie? Update TMDB ID</summary>
+  <details class="tmdb-fix"{% if tmdb_error %} open{% endif %}>
+    <summary class="button button-ghost">Wrong movie? Update TMDB URL</summary>
     <form class="tmdb-fix-form" method="post" action="{% url 'update-tmdb' %}">
       {% csrf_token %}
       <input type="hidden" name="redirect" value="{{ redirect|default:'detail' }}">
       {% if movie %}
         <input type="hidden" name="return_tmdb_id" value="{{ movie.tmdb_id }}">
+      {% endif %}
+      {% if tmdb_error %}
+        <p class="form-error" role="alert">{{ tmdb_error }}</p>
       {% endif %}
 
       {% if week %}
@@ -32,11 +35,11 @@
       {% endif %}
 
       <label class="field">
-        <span>New TMDB ID</span>
-        <input type="number" name="tmdb_id" min="1" step="1" inputmode="numeric" required placeholder="e.g. 603" autocomplete="off">
+        <span>TMDB movie URL</span>
+        <input type="url" name="tmdb_url" inputmode="url" required placeholder="https://www.themoviedb.org/movie/603-the-matrix" autocomplete="off" spellcheck="false">
       </label>
       <button class="button" type="submit">Update match</button>
     </form>
-    <p class="form-help">Only the selected pick changes. TMDB details are fetched again automatically.</p>
+    <p class="form-help">Paste the movie’s TMDB page URL. Only the selected pick changes; details are fetched again automatically.</p>
   </details>
 {% endif %}

@@ -8,6 +8,7 @@ dependencies = [
   "psycopg[binary]>=3.2",
   "httpx>=0.28",
   "django-environ>=0.12",
+  "gunicorn>=23",
 ]
 
 [dependency-groups]

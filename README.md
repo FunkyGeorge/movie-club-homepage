@@ -6,28 +6,26 @@ selected the movie.
 
 ## Requirements
 
-The development environment is declared in `flake.nix`:
+The environment is declared in `flake.nix` and entered with the project
+wrapper `nix/env`:
 
 ```bash
-nix develop
-uv venv --python "$(which python3.12)"
-uv sync
+nix/env
+make sync
 ```
 
-If flakes are not enabled, add this to `~/.config/nix/nix.conf`:
+`nix/env` is a small wrapper around `nix develop` that enables flakes for the
+command, so the same entrypoint works on development machines and the Ubuntu
+server. `UV_PYTHON_DOWNLOADS=never` is set in the environment, so `uv` uses the
+Nix Python instead of downloading its own. `make sync` installs the development
+dependencies; `make sync-prod` installs the production set from `uv.lock` with
+`--frozen --no-dev`.
+
+If you invoke Nix directly, add this to `~/.config/nix/nix.conf`:
 
 ```ini
 experimental-features = nix-command flakes
 ```
-
-or invoke Nix with the flags explicitly:
-
-```bash
-nix --extra-experimental-features 'nix-command flakes' develop
-```
-
-`UV_PYTHON_DOWNLOADS=never` is set in the dev shell, so `uv` uses the Nix
-Python instead of downloading its own.
 
 ## Database
 
@@ -87,6 +85,16 @@ make dev
 
 The server listens on `http://127.0.0.1:8000`.
 
+## Deployment
+
+Production deployment instructions for a DigitalOcean Droplet are in
+[`DEPLOYMENT.md`](DEPLOYMENT.md). Supporting systemd, Nginx, and environment
+templates live under `deploy/`.
+
+Development and production use the same `nix/env` shell and `uv.lock`. The
+production install uses `make sync-prod` or `uv sync --frozen --no-dev`;
+PostgreSQL, Nginx, systemd, and TLS remain managed by Ubuntu rather than Nix.
+
 ## Public site
 
 The public site is available at `/`:
@@ -99,15 +107,16 @@ The public site is available at `/`:
 
 The archive includes every week, including picks that could not be matched to
 TMDB; unmatched picks appear as cards with the title and dates but no movie
-metadata, and link to a pick page where a TMDB ID can be added. Public pages
+metadata, and link to a pick page where a TMDB movie URL can be added. Public pages
 never display chooser names, usernames, Discord IDs, or other member identities.
 Aggregated member counts are shown without identifying anyone. Stats and charts
 use matched weeks only. Movie posters are loaded from the saved TMDB poster
 paths on the homepage and archive cards.
 
 Anyone can correct a bad TMDB match from the homepage current pick or a movie
-detail page. The form only changes the selected week, re-fetches the movie from
-TMDB, and redirects back to the refreshed details.
+detail page by pasting the movie’s TMDB URL. The form only changes the selected
+week, re-fetches the movie from TMDB, and redirects back to the refreshed
+details.
 
 Generate the public chart assets after importing or re-syncing movies:
 
@@ -373,6 +382,7 @@ config/          Django settings, URLs, WSGI/ASGI
 apps/club/       Member, Week, API endpoint, import/enrich commands, admin
 apps/movies/     Movie, Genre, TMDB client and sync
 tests/           API, model, and import tests
+nix/env          Project wrapper for the Nix environment
 nix/system.nix   Optional NixOS module
-flake.nix        Development shell
+flake.nix        Development and production runtime
 ```

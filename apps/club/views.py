@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import Counter
+from urllib.parse import urlencode
 
 from django.conf import settings
 from django.contrib import messages
@@ -8,14 +9,27 @@ from django.core.paginator import Paginator
 from django.db.models import Avg, Q, QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 
 from apps.movies.models import Genre, Movie
 from apps.movies.sync import resolve_movie_by_id, sync_movie_metadata
-from apps.movies.tmdb import TMDBError
+from apps.movies.tmdb import TMDBError, parse_movie_url
 
 from .models import Week
+
+_TMDB_FORM_ERRORS = {
+    "invalid_url": (
+        "Enter a full TMDB movie URL, such as https://www.themoviedb.org/movie/603-the-matrix."
+    ),
+    "lookup_failed": "TMDB could not load that movie. Check the URL and try again.",
+    "refresh_failed": "TMDB could not refresh that movie. Try again.",
+}
+
+
+def _tmdb_form_error(request: HttpRequest) -> str | None:
+    return _TMDB_FORM_ERRORS.get(request.GET.get("tmdb_error", ""))
 
 
 def _matched_weeks() -> QuerySet[Week]:
@@ -94,6 +108,7 @@ def home(request: HttpRequest) -> HttpResponse:
             "recent_weeks": recent[:6],
             "stats": _public_stats(),
             "join_url": settings.CLUB_JOIN_URL,
+            "tmdb_error": _tmdb_form_error(request),
         },
     )
 
@@ -167,6 +182,7 @@ def movie_detail(request: HttpRequest, tmdb_id: int) -> HttpResponse:
             "movie": movie,
             "weeks": weeks,
             "pick_count": weeks.count(),
+            "tmdb_error": _tmdb_form_error(request),
         },
     )
 
@@ -181,7 +197,10 @@ def week_detail(request: HttpRequest, week_id: int) -> HttpResponse:
     return render(
         request,
         "club/week_detail.html",
-        {"week": week},
+        {
+            "week": week,
+            "tmdb_error": _tmdb_form_error(request),
+        },
     )
 
 
@@ -200,42 +219,36 @@ def update_tmdb(request: HttpRequest) -> HttpResponse:
     redirect_to = request.POST.get("redirect", "detail")
     return_tmdb_id = request.POST.get("return_tmdb_id", "").strip()
 
-    def back():
+    def back(error: str | None = None):
         if redirect_to == "home":
-            return redirect("home")
-        if redirect_to == "week":
-            return redirect("week-detail", week_id=week.pk)
-        if return_tmdb_id.isdigit():
-            return redirect("movie-detail", tmdb_id=int(return_tmdb_id))
-        if week.movie_id:
-            return redirect("movie-detail", tmdb_id=week.movie.tmdb_id)
-        return redirect("home")
+            url = reverse("home")
+        elif redirect_to == "week":
+            url = reverse("week-detail", args=[week.pk])
+        elif return_tmdb_id.isdigit():
+            url = reverse("movie-detail", args=[int(return_tmdb_id)])
+        elif week.movie_id:
+            url = reverse("movie-detail", args=[week.movie.tmdb_id])
+        else:
+            url = reverse("home")
 
-    raw_tmdb_id = request.POST.get("tmdb_id", "").strip()
-    try:
-        tmdb_id = int(raw_tmdb_id)
-    except ValueError:
-        messages.error(request, "Enter a numeric TMDB ID.")
-        return back()
+        if error:
+            url = f"{url}?{urlencode({'tmdb_error': error})}"
+        return redirect(url)
 
-    if tmdb_id < 1:
-        messages.error(request, "Enter a positive TMDB ID.")
-        return back()
+    tmdb_url = request.POST.get("tmdb_url", "").strip()
+    tmdb_id = parse_movie_url(tmdb_url)
+    if tmdb_id is None:
+        return back("invalid_url")
 
     if week.movie_id and week.movie.tmdb_id == tmdb_id:
         if not sync_movie_metadata(week.movie):
-            messages.error(
-                request,
-                f"Could not refresh TMDB data for {week.movie.title}: {week.movie.sync_error}",
-            )
-            return back()
+            return back("refresh_failed")
         messages.success(request, f"TMDB details refreshed for {week.movie.title}.")
     else:
         try:
             movie = resolve_movie_by_id(tmdb_id)
-        except TMDBError as exc:
-            messages.error(request, f"TMDB lookup failed: {exc}")
-            return back()
+        except TMDBError:
+            return back("lookup_failed")
 
         week.movie = movie
         week.match_status = Week.MatchStatus.MATCHED
