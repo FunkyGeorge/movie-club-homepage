@@ -1,0 +1,61 @@
+{% extends "club/base.html" %}
+
+{% block title %}{{ movie.title }} · Movie Club{% endblock %}
+
+{% block content %}
+  <p class="back-link"><a class="text-link" href="{% url 'archive' %}">← Back to the archive</a></p>
+
+  <section class="detail-hero">
+    <div class="detail-poster">
+      {% if movie.poster_url %}
+        <img src="{{ movie.poster_url }}" alt="" width="500" height="750">
+      {% else %}
+        <div class="poster-fallback" aria-hidden="true">{{ movie.title|first }}</div>
+      {% endif %}
+    </div>
+    <div>
+      <p class="eyebrow">From the archive</p>
+      <h1>{{ movie.title }}</h1>
+      <div class="meta-row">
+        {% if movie.release_date %}<span>{{ movie.release_date.year }}</span>{% endif %}
+        {% if movie.runtime %}<span>{{ movie.runtime }} min</span>{% endif %}
+        <span>Picked {{ pick_count }} time{{ pick_count|pluralize }}</span>
+      </div>
+      <p class="genre-line">
+        {% for genre in movie.genres.all %}
+          <span class="tag">{{ genre.name }}</span>
+        {% empty %}
+          <span class="tag">Genre pending</span>
+        {% endfor %}
+      </p>
+      {% include "club/_tmdb_fix_form.html" with weeks=weeks movie=movie redirect="detail" %}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Club history</p>
+        <h2>When it was picked</h2>
+      </div>
+    </div>
+    <ul class="timeline">
+      {% for week in weeks %}
+        <li>
+          <span class="timeline-dot" aria-hidden="true"></span>
+          <span>
+            {% if week.starts_on and week.ends_on %}
+              {{ week.starts_on|date:"M j, Y" }} – {{ week.ends_on|date:"M j, Y" }}
+            {% elif week.period_label %}
+              {{ week.period_label }}
+            {% else %}
+              Date unavailable
+            {% endif %}
+          </span>
+        </li>
+      {% empty %}
+        <li>This movie has not appeared in a matched week yet.</li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endblock %}

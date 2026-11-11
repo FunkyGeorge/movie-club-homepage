@@ -1,0 +1,38 @@
+{% extends "club/base.html" %}
+
+{% block title %}About · Movie Club{% endblock %}
+
+{% block content %}
+  <section class="page-heading">
+    <p class="eyebrow">The short version</p>
+    <h1>A weekly movie club with a long memory.</h1>
+    <p class="lede">One pick at a time, we build a shared history of what we watched and what we loved.</p>
+  </section>
+
+  <div class="prose">
+    <h2>How it works</h2>
+    <p>Each week, one member chooses a movie for the group. The pick gets a week of its own, and the club keeps a permanent record of the title, release year, runtime, genres, and dates.</p>
+
+    <h2>What is public</h2>
+    <p>This site is a public archive. It shows the movies and the shape of the club over time, but it never publishes who selected a particular movie.</p>
+
+    <h2>How to join</h2>
+    {% if join_url %}
+      <p>New members are welcome. Use the link below to get in touch and find out what the club is watching next.</p>
+      <p><a class="button" href="{{ join_url }}">Join the club</a></p>
+    {% else %}
+      <p>New members are welcome. Ask a current member for an invite and find out what the club is watching next.</p>
+    {% endif %}
+  </div>
+
+  <section class="join-panel">
+    <div>
+      <p class="eyebrow">Keep exploring</p>
+      <h2>See what we have watched.</h2>
+      <p>The archive is open, searchable, and sorted by the week each movie was picked.</p>
+    </div>
+    <div>
+      <a class="button button-ghost" href="{% url 'archive' %}">Open the archive</a>
+    </div>
+  </section>
+{% endblock %}

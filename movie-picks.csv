@@ -1,0 +1,299 @@
+start,end,selector,title,period
+2021-02-16,2021-02-21,Shalvin,Malang,Feb 16-Feb 21
+2021-02-21,2021-02-28,Mark,Rashomon,Feb 21-Feb 28
+2021-02-28,2021-03-07,Max,I Saw The Devil,Feb 28- Mar 7
+2021-03-07,2021-03-14,George,The Warlords,Mar 7 – Mar 14
+2021-03-14,2021-03-21,Luis,Samurai Cop,Mar 14 - Mar 21
+2021-03-21,2021-03-28,Alvaro,Burning,Mar 21 - Mar 28
+2021-03-28,2021-04-04,Shalvin,AK vs AK,Mar 28 - Apr 4
+2021-04-04,2021-04-11,Alvaro,Raw,Apr 4 - Apr 11
+2021-04-11,2021-04-18,Mark,The Wind Rises,Apr 11 - Apr 18
+2021-04-18,2021-04-25,Luis,Shin Godzilla,Apr 18 - Apr 25
+2021-04-25,2021-05-02,George,Point Break (1991),Apr 25 - May 2
+2021-05-02,2021-05-09,Max,Game Night,May 2 - May 9
+2021-05-09,2021-05-16,Alvaro,The Handmaiden,May 9 - May 16
+2021-05-16,2021-05-23,Max,The Mitchells Vs. The Machines,May 16 - May 23
+2021-05-23,2021-05-30,Luis,Samurai Cop 2: Deadly Vengeance,May 23 - May 30
+2021-05-30,2021-06-06,George,Guava Island,May 30 - June 6
+2021-06-06,2021-06-13,Shalvin,Prem Ratan Dhan Payo,June 6 - June 13
+2021-06-13,2021-06-20,Mark,Sneakers,June 13 - June 20
+2021-06-20,2021-06-27,Mark,The French Connection,June 20 - June 27
+2021-06-27,2021-07-04,Shalvin,Ninja Assassin,June 27 - July 4
+2021-07-04,2021-07-11,Max,Running Scared (2006),July 4 -July 11
+2021-07-11,2021-07-18,Alvaro,The Machine Girl,July 11 - July 18
+2021-07-18,2021-07-25,George,Synchronic,July 18 - July 25
+2021-07-25,2021-08-01,Luis,Red Cliff,July 25 - August 1
+2021-08-01,2021-08-08,Shalvin,Wazir,August 1 - August 8
+2021-08-08,2021-08-15,Mark,Chariots Of Fire,August 8 - August 15
+2021-08-15,2021-08-22,Alvaro,The Age of Innocence,August 15 - August 22
+2021-08-22,2021-08-29,Luis,The Life Aquatic With Steve Zissou,August 22 - August 29
+2021-08-29,2021-09-05,George,A Silent Voice,August 29 - September 5
+2021-09-05,2021-09-12,Max,Val,September 5 - September 12
+2021-09-12,2021-09-19,George,His House,September 12 - September 19
+2021-09-19,2021-09-26,Mark,Fullmetal Alchemist,September 19 - September 26
+2021-09-26,2021-10-03,Shalvin,The King (2017),September 26 - October 3
+2021-10-03,2021-10-10,Max,Freaky,October 3 - October 10
+2021-10-10,2021-10-17,Luis,Shot Caller,October 10 - October 17
+2021-10-17,2021-10-24,Alvaro,Perfect Blue,October 17 - October 24
+2021-10-24,2021-10-31,Max,Timecrimes,October 24 - October 31
+2021-10-31,2021-11-07,Luis,Lupin III: The First,October 31 - November 7
+2021-11-07,2021-11-14,Alvaro,Audition,November 7 - November 14
+2021-11-14,2021-11-21,Mark,Space Sweepers,November 14 - November 21
+2021-11-21,2021-11-28,Shalvin,Gabbar Is Back,November 21 - November 28
+2021-11-28,2021-12-05,George,The Harder They Fall,November 28 - December 5
+2021-12-05,2021-12-12,Luis,Terra Formars,December 5 - December 12
+2021-12-12,2021-12-19,Shalvin,Singham,December 12 - December 19
+2021-12-19,2021-12-26,Alvaro,The Power Of The Dog,December 19 - December 26
+2021-12-26,2022-01-02,Mark,It Happened One Night,December 26 - January 2
+2022-01-02,2022-01-09,Max,Don't Look Up,January 2 - January 9
+2022-01-09,2022-01-16,George,The Platform,January 9 - January 16
+2022-01-16,2022-01-23,Luis,Oxygen,January 16 - January 23
+2022-01-23,2022-01-30,Alvaro,Pig,January 23 - January 30
+2022-01-30,2022-02-06,George,"Tick, Tick....Boom!",January 30 - February 6
+2022-02-06,2022-02-13,Max,Nightmare Alley,February 6 - February 13
+2022-02-13,2022-02-20,Shalvin,Gantz:0,February 13 - February 20
+2022-02-20,2022-02-27,Mark,Soylent Green,February 20 - February 27
+2022-02-27,2022-03-06,Max,Kimi,February 27 - March 6
+2022-03-06,2022-03-13,Mark,North By Northwest,March 6 - March 13
+2022-03-13,2022-03-20,Alvaro,There Will Be Blood,March 13 - March 20
+2022-03-20,2022-03-27,George,The Witcher: Nightmare of the Wolf,March 20 - March 27
+2022-03-27,2022-04-03,Luis,Deep Water,March 27 - April 3
+2022-04-03,2022-04-10,Shalvin,Kesari,April 3 - April 10
+2022-04-10,2022-04-17,Alvaro,In The Mood For Love,April 10 - April 17
+2022-04-17,2022-04-24,George,The Great Happiness Space: Tale of an Osaka Love Thief,April 17 - April 24
+2022-04-24,2022-05-01,Luis,Leon: The Professional,April 24 - May 1
+2022-05-01,2022-05-08,Max,Matchstick Men,May 1 - May 8
+2022-05-08,2022-05-15,Mark,Gook,May 8 - May 15
+2022-05-15,2022-05-22,Shalvin,Thugs of Hindostan,May 15 - May 22
+2022-05-22,2022-05-29,Shalvin,The Way Of The Dragon,May 22 - May 29
+2022-05-29,2022-06-05,Max,"O Brother, Where Art Thou?",May 29 - June 5
+2022-06-05,2022-06-12,Alvaro,Titane,June 5 - June 12
+2022-06-12,2022-06-19,George,Bubble,June 12 - June 19
+2022-06-19,2022-06-26,Mark,Advantageous,June 19 - June 26
+2022-06-26,2022-07-03,Luis,Feels Good Man,June 26 - July 3
+2022-07-03,2022-07-10,George,Forgotten,July 3 - July 10
+2022-07-10,2022-07-17,Max,Top Secret!,July 10 - July 17
+2022-07-17,2022-07-24,Luis,Nausicaa of the Valley of the Wind,July 17 - July 24
+2022-07-24,2022-07-31,Mark,Operation Mincemeat,July 24 - July 31
+2022-07-31,2022-08-07,Shalvin,Red Notice,July 31 - August 7
+2022-08-07,2022-08-14,Alvaro,Raging Bull,August 7 - August 14
+2022-08-14,2022-08-21,George,A Most Violent Year,August 14 - August 21
+2022-08-21,2022-08-28,Max,Thirteen Lives,August 21 - August 28
+2022-08-28,2022-09-04,Luis,Seoul Vibe,August 28 - September 4
+2022-09-04,2022-09-11,Alvaro,The Virgin Suicides,September 4 - September 11
+2022-09-11,2022-09-18,Mark,Porco Rosso,September 11 - September 18
+2022-09-18,2022-09-25,Shalvin,Drunken Master,September 18 - September 25
+2022-09-25,2022-10-02,Alvaro,For All Mankind,September 25 - October 2
+2022-10-02,2022-10-09,George,Entergalactic,October 2 - October 9
+2022-10-09,2022-10-16,Luis,The Great Escape,October 9 - October 16
+2022-10-16,2022-10-23,Mark,Searching For Bobby Fischer,October 16 - October 23
+2022-10-23,2022-10-30,Shalvin,Daddy,October 23 - October 30
+2022-10-30,2022-11-06,Max,The Rainmaker,October 30 - November 6
+2022-11-06,2022-11-13,Max,Don't Worry Darling,November 6 - November 13
+2022-11-13,2022-11-20,Luis,Throne of Blood,November 13 - November 20
+2022-11-20,2022-11-27,Alvaro,Silence,November 20 - November 27
+2022-11-27,2022-12-04,George,What Did Jack Do?,November 27 - December 4
+2022-12-04,2022-12-11,Mark,The House,December 4 - December 11
+2022-12-11,2022-12-18,Shalvin,Blazing Saddles,December 11 - December 18
+2022-12-18,2022-12-25,Mark,Zoolander,December 18 - December 25
+2022-12-25,2023-01-01,Max,Glass Onion,December 25 - January 1
+2023-01-01,2023-01-08,Alvaro,Devil In A Blue Dress,January 1 - January 8
+2023-01-08,2023-01-15,George,Barbarian,January 8 - January 15
+2023-01-15,2023-01-22,Shalvin,RRR,January 15 - January 22
+2023-01-22,2023-01-29,Luis,A Family,January 22 - January 29
+2023-01-29,2023-02-05,Max,The Sting,January 29 - February 5
+2023-02-05,2023-02-12,Alvaro,Shaft (1971),February 5 - February 12
+2023-02-12,2023-02-19,George,Words Bubble Up Like Soda Pop,February 12 - February 19
+2023-02-19,2023-02-26,Luis,The Founder,February 19 - February 26
+2023-02-26,2023-03-05,Shalvin,Unstoppable,February 26 - March 5
+2023-03-05,2023-03-12,Alvaro,The Woman King,March 5 - March 12
+2023-03-12,2023-03-19,Max,The Fugitive,March 12 - March 19
+2023-03-19,2023-03-26,Shalvin,Pitch Black,March 19 - March 26
+2023-03-26,2023-04-02,Luis,"The Good, The Bad, The Weird",March 26 - April 2
+2023-04-02,2023-04-09,George,The Nice Guys,April 2 - April 9
+2023-04-09,2023-04-16,Mark,Butch Cassidy and the Sundance Kid,April 9 - April 16
+2023-04-16,2023-04-23,Alvaro,Training Day,April 16 - April 23
+2023-04-23,2023-04-30,Mark,The Summit of The Gods,April 23 - April 30
+2023-04-30,2023-05-07,George,Free Solo,April 30 - May 7
+2023-05-07,2023-05-14,Max,Hard Boiled,May 7 - May 14
+2023-05-14,2023-05-21,Luis,Rush,May 14 - May 21
+2023-05-21,2023-05-28,Shalvin,Baahubali: The Beginning (Hindi),May 21 - May 28
+2023-05-28,2023-06-04,Luis,Baahubali 2: The Conclusion (Hindi),May 28 - June 4
+2023-06-04,2023-06-11,Alvaro,Robocop,June 4 - June 11
+2023-06-11,2023-06-18,Max,Extraction 2,June 11 - June 18
+2023-06-18,2023-06-25,Shalvin,"The Gangster, The Cop, The Devil",June 18 - June 25
+2023-06-25,2023-07-02,Mark,Robin Hood: Men In Tights,June 25 - July 2
+2023-07-02,2023-07-09,George,I Lost My Body,July 2 - July 9
+2023-07-09,2023-07-16,George,Paddington 2,July 9 - July 16
+2023-07-16,2023-07-23,Shalvin,Conan The Barbarian,July 16 - July 23
+2023-07-23,2023-07-30,Max,Strange Days,July 23 - July 30
+2023-07-30,2023-08-06,Luis,Hunt For The Wilderpeople,July 30 - August 6
+2023-08-06,2023-08-13,Alvaro,Belly,August 6 - August 13
+2023-08-13,2023-08-20,Mark,Apollo 10 1/2,August 13 - August 20
+2023-08-20,2023-08-27,Alvaro,Nimona,August 20 -August 27
+2023-08-27,2023-09-03,Mark,Coming To America,August 27 - September 3
+2023-09-03,2023-09-10,Luis,The Cable Guy,September 3 - September 10
+2023-09-10,2023-09-17,Shalvin,Sarkar,September 10 - September 17
+2023-09-17,2023-09-24,George,Vacation Friends,September 17 - September 24
+2023-09-24,2023-10-01,Max,The Flash,September 24 - October 1
+2023-10-01,2023-10-08,George,The Man From Earth,October 1 - October 8
+2023-10-08,2023-10-15,Max,Scanners,October 8 - October 15
+2023-10-15,2023-10-22,Shalvin,Hidden Strike,October 15 - October 22
+2023-10-22,2023-10-29,Luis,Constantine,October 22 - October 29
+2023-10-29,2023-11-05,Alvaro,House,October 29 - November 5
+2023-11-05,2023-11-12,Luis,Ghost In The Shell (1995),November 5 - November 12
+2023-11-12,2023-11-19,Mark,Young Frankenstein,November 12 - November 19
+2023-11-19,2023-11-26,Shalvin,Pathaan,November 19 - November 26
+2023-11-26,2023-12-03,Max,Cop Land,November 26 - December 3
+2023-12-03,2023-12-10,George,Whiplash,December 3 - December 10
+2023-12-10,2023-12-17,Alvaro,Scrooged,December 10 - December 17
+2023-12-17,2023-12-24,George,The Imitation Game,December 17 - December 24
+2023-12-24,2023-12-31,Alvaro,Black Swan,December 24 - 31
+2023-12-31,2024-01-07,Mark,The Truth Shall Not Sink with Sewol,December 31 - January 7
+2024-01-07,2024-01-14,Luis,High Life,January 7 - January 14
+2024-01-14,2024-01-21,Max,Upgrade,January 14 - January 21
+2024-01-21,2024-01-28,Shalvin,Jawan,January 21 - January 28
+2024-01-28,2024-02-04,Luis,Dumb Money,January 28 - February 4
+2024-02-04,2024-02-11,Shalvin,Beverly Hills Cop,February 4 - February 11
+2024-02-11,2024-02-18,Alvaro,Bucktown,February 11 - February 18
+2024-02-18,2024-02-25,George,Ne Zha,February 18 - February 25
+2024-02-25,2024-03-03,Max,L.A. Confidential,February 25 - March 3
+2024-03-03,2024-03-10,Niria,Magic,March 3 - March 10
+2024-03-10,2024-03-17,Niria,The Great Dictator,March 10 - March 17
+2024-03-17,2024-03-24,Shalvin,The Burial,March 17 - March 24
+2024-03-24,2024-03-31,Max,Con Air,March 24 - March 31
+2024-03-31,2024-04-07,Luis,Dune (1984),March 31 - April 7
+2024-04-07,2024-04-14,George,Summer Ghost,April 7 - April 14
+2024-04-14,2024-04-21,Mark,Happy Gilmore,April 14 - April 21
+2024-04-21,2024-04-28,Alvaro,Almost Famous,April 21 - April 28
+2024-04-28,2024-05-05,George,Minari,April 28 - May 5
+2024-05-05,2024-05-12,Luis,The Iron Claw,May 5 - May 12
+2024-05-12,2024-05-19,Max,Madame Web,May 12 - May 19
+2024-05-19,2024-05-26,Niria,Mulan (1998),May 19 - May 26
+2024-05-26,2024-06-02,Mark,Orion and the Dark,May 26 - June 2
+2024-06-02,2024-06-09,Alvaro,High and Low,June 2 - June 9
+2024-06-09,2024-06-16,Mark,Stephen Tobolowsky's Birthday Party,June 9 - June 16
+2024-06-16,2024-06-23,Alvaro,After Hours,June 16 - June 23
+2024-06-23,2024-06-30,Luis,Starship Troopers,June 23 - June 30
+2024-06-30,2024-07-07,George,American Fiction,June 30 - July 7
+2024-07-07,2024-07-14,Niria,Life Is Beautiful,July 7 - July 14
+2024-07-14,2024-07-21,Max,The Beekeeper,July 14 - July 21
+2024-07-21,2024-07-28,George,Predestination,July 21 - July 28
+2024-07-28,2024-08-04,Alvaro,Miracle,July 28 - August 4
+2024-08-04,2024-08-11,Luis,Blade of the Immortal,August 4 - August 11
+2024-08-11,2024-08-18,Niria,The Whale,August 11 - August 18
+2024-08-18,2024-08-25,Max,Sing Street,August 18 - August 25
+2024-08-25,2024-09-01,George,Suzume,August 25 - September 1
+2024-09-01,2024-09-08,Alvaro,Trainspotting,September 1 - September 8
+2024-09-08,2024-09-15,Luis,The Quick and the Dead,September 8 - September 15
+2024-09-15,2024-09-22,Max,Midnight Run,September 15 - September 22
+2024-09-22,2024-09-29,Niria,Society,September 22 - September 29
+2024-09-29,2024-10-06,Niria,M,September 29 - October 6
+2024-10-06,2024-10-13,George,Infernal Affairs,October 6 - October 13
+2024-10-13,2024-10-20,Luis,Boyz N The Hood,October 13 - October 20
+2024-10-20,2024-10-27,Max,Misery,October 20 - October 27
+2024-10-27,2024-11-03,Alvaro,Cronos,October 27 - November 3
+2024-11-03,2024-11-10,Alvaro,Escape From New York,November 3 - November 10
+2024-11-10,2024-11-17,George,Hero,November 10 - November 17
+2024-11-17,2024-11-24,Max,Trap,November 17 - November 24
+2024-11-24,2024-12-01,Luis,Johnny Mnemonic,November 24 - December 1
+2024-12-01,2024-12-08,Niria,Lost In Translation,December 1 - December 8
+2024-12-08,2024-12-15,Alvaro,Chungking Express,December 8 - December 15
+2024-12-15,2024-12-22,Luis,Tokyo Godfathers,December 15 - December 22
+2024-12-22,2024-12-29,Max,The Rock,December 22 - December 29
+2024-12-29,2025-01-05,George,The Greatest Showman,December 29 - January 5
+2025-01-05,2025-01-12,Niria,I'm Here,January 5 - January 12
+2025-01-12,2025-01-19,Luis,The Remarkable Life of Ibelin,January 12 - January 19
+2025-01-19,2025-01-26,George,The Peanut Butter Falcon,January 19 - January 26
+2025-01-26,2025-02-02,Niria,The Wild Robot,January 26 - February 2
+2025-02-02,2025-02-09,Max,Wallace & Gromit: Vengeance Most Fowl,February 2 - February 9
+2025-02-09,2025-02-16,Alvaro,Jackie Brown,February 9 - February 16
+2025-02-16,2025-02-23,Max,Saturday Night,February 16 - February 23
+2025-02-23,2025-03-02,Niria,Flow,February 23 - March 2
+2025-03-02,2025-03-09,Luis,Runaway Jury,March 2 - March 9
+2025-03-09,2025-03-16,George,The Lord Of The Rings: The War Of The Rohirrim,March 9 - March 16
+2025-03-16,2025-03-23,Alvaro,Closer,March 16 - March 23
+2025-03-23,2025-03-30,Luis,Pacific Rim,March 23 - March 30
+2025-03-30,2025-04-06,Alvaro,Field of Dreams,March 30 - April 6
+2025-04-06,2025-04-13,George,The Last Witch Hunter,April 6 - April 13
+2025-04-13,2025-04-20,Max,Speed,April 13 - April 20
+2025-04-20,2025-04-27,Niria,Conclave,April 20 - April 27
+2025-04-27,2025-05-04,Alvaro,The Hitchhiker's Guide to the Galaxy,April 27 - May 4
+2025-05-04,2025-05-11,George,Better Days,May 4 - May 11
+2025-05-11,2025-05-18,Luis,Iron Monkey,May 11 - May 18
+2025-05-18,2025-05-25,Niria,The Holy Mountain,May 18 - May 25
+2025-05-25,2025-06-01,Max,The Usual Suspects,May 25 - June 1
+2025-06-01,2025-06-08,George,The Boy Who Harnassed The Wind,June 1 - June 8
+2025-06-08,2025-06-15,Alvaro,Demolition Man,June 8 - June 15
+2025-06-15,2025-06-22,Niria,On The Waterfront,June 15 - June 22
+2025-06-22,2025-06-29,Luis,Boondock Saints,June 22 - June 29
+2025-06-29,2025-07-06,Max,Minority Report,June 29 - July 6
+2025-07-06,2025-07-13,Max,Slap Shot,July 6 - July 13
+2025-07-13,2025-07-20,Alvaro,Battle Royale,July 13 - July 20
+2025-07-20,2025-07-27,Luis,Happy Gilmore 2,July 20 - July 27
+2025-07-27,2025-08-03,Niria,I Love You Forever,July 27 - August 3
+2025-08-03,2025-08-10,George,The Zone of Interest,August 3 - August 10
+2025-08-10,2025-08-17,Luis,Angels In The Outfield,August 10 - August 17
+2025-08-17,2025-08-24,Niria,When The Wind Blows,August 17 - August 24
+2025-08-24,2025-08-31,Max,True Lies,August 24 - August 31
+2025-08-31,2025-09-07,George,Bob Trevino Likes It,August 31 - September 7
+2025-09-07,2025-09-14,Alvaro,Paprika,September 7 - September 14
+2025-09-14,2025-09-21,George,Tron,September 14 - September 21
+2025-09-21,2025-09-28,Luis,Edge of Tomorrow,September 21 - September 28
+2025-09-28,2025-10-05,Alvaro,Kneecap,September 28 - October 5
+2025-10-05,2025-10-12,Niria,Kung Pow! Enter the Fist,October 5 - October 12
+2025-10-12,2025-10-19,Max,Bring Her Back,October 12 - October 19
+2025-10-19,2025-10-26,Max,The Manchurian Candidate (1962),October 19 - October 26
+2025-10-26,2025-11-02,Niria,The Wolfman (1941),October 26 - November 2
+2025-11-02,2025-11-09,George,The Lord of the Rings (1978),November 2 - November 9
+2025-11-09,2025-11-16,Alvaro,The Grudge,November 9 - November 16
+2025-11-16,2025-11-23,Luis,Godzilla Minus One,November 16 - November 23
+2025-11-23,2025-11-30,Niria,ThanksKilling,November 23 - November 30
+2025-11-30,2025-12-07,Max,Go,November 30 - December 7
+2025-12-07,2025-12-14,George,Four Brothers,December 7 - December 14
+2025-12-14,2025-12-21,Luis,Trading Places,December 14 - December 21
+2025-12-21,2025-12-28,Alvaro,When Harry Met Sally,December 21 - December 28
+2025-12-28,2026-01-04,Luis,Night of the Living Dead,December 28 - January 4
+2026-01-04,2026-01-11,Max,Duel,January 4 - January 11
+2026-01-11,2026-01-18,Alvaro,Thief,January 11 - January 18
+2026-01-18,2026-01-25,George,Gone Baby Gone,January 18 - January 25
+2026-01-25,2026-02-01,Niria,Eraserhead,January 25 - February 1
+2026-02-01,2026-02-08,Alvaro,Over The Top (1987),February 1 - February 8
+2026-02-08,2026-02-15,Max,To Live and Die in L.A. (1985),February 8 - February 15
+2026-02-15,2026-02-22,George,Thunderheart (1992),February 15 - February 22
+2026-02-22,2026-03-01,Niria,Cape Fear (1991),February 22 - March 1
+2026-03-01,2026-03-08,Luis,The 'Burbs (1989),March 1 - March 8
+2026-03-08,2026-03-15,George,Tigers Are Not Afraid (Spanish),March 8 - March 15
+2026-03-15,2026-03-22,Alvaro,Black Orpheus (Portuguese),March 15 - March 22
+2026-03-22,2026-03-29,Max,Lady Snowblood (Japanese),March 22 - March 29
+2026-03-29,2026-04-05,Niria,Run Lola Run (German),March 29 - April 5
+2026-04-05,2026-04-12,Luis,The Killer (Cantonese),April 5 - April 12
+2026-04-12,2026-04-19,Max,Identity,April 12 - April 19
+2026-04-19,2026-04-26,Luis,Memories of Murder,April 19 - April 26
+2026-04-26,2026-05-03,Niria,Clue,April 26 - May 3
+2026-05-03,2026-05-10,George,And Then There Were None,May 3 - May 10
+2026-05-10,2026-05-17,Alvaro,The Great Mouse Detective,May 10 - May 17
+2026-05-17,2026-05-24,George,Ender's Game,May 17 - May 24
+2026-05-24,2026-05-31,Luis,Flash Gordon,May 24 - May 31
+2026-05-31,2026-06-07,Niria,Gentlemen Broncos,May 31 - June 7
+2026-06-07,2026-06-14,Alvaro,Fantastic Planet,June 7 - June 14
+2026-06-14,2026-06-21,Max,Galaxy Quest,June 14 - June 21
+2026-06-21,2026-06-28,Alvaro,Ghost World,June 21 - June 28
+2026-06-28,2026-07-05,Luis,Transformers One,June 28 - July 5
+2026-07-05,2026-07-12,Max,The Death of Stalin,July 5 - July 12
+2026-07-12,2026-07-19,Niria,In The Soup,July 12 - July 19
+2026-07-19,2026-07-26,Luis,Tetris,July 19 - July 26
+2026-07-26,2026-08-02,Max,The Untouchables,July 26 - August 2
+2026-08-02,2026-08-09,George,Vice,August 2 - August 9
+2026-08-09,2026-08-16,Alvaro,Jeremiah Johnson,August 9 - August 16
+2026-08-16,2026-08-23,Niria,Blow,August 16 - August 23
+2026-08-23,2026-08-30,Niria,Fallen,August 23 - August 30
+2026-08-30,2026-09-06,Max,Vampire's Kiss,August 30 - September 6
+2026-09-06,2026-09-13,Alvaro,Spider-Man,September 6 - September 13
+2026-09-13,2026-09-20,Luis,Friday,September 13 - September 20
+2026-09-20,2026-09-27,George,The Ballad of Buster Scruggs,September 20 - September 27
+2026-09-27,2026-10-04,Niria,Carlitos Way,September 27 - October 4
+2026-10-04,2026-10-11,Luis,Ne Zha 2,October 4 - October 11
+2026-10-11,2026-10-18,George,Nightcrawler,October 11 - October 18
+2026-10-18,2026-10-25,Alvaro,Blow Out,October 18 - October 25
+2026-10-25,2026-11-1,Max,Orphan,October 25 - November 1

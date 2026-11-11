@@ -24,9 +24,20 @@
               ruff
             ];
 
+            # Shared libraries needed by the pandas/matplotlib wheels.
+            buildInputs = with pkgs; [
+              stdenv.cc.cc.lib
+              zlib
+            ];
+
             env = {
               # Use the Nix Python instead of downloading uv's own interpreter.
               UV_PYTHON_DOWNLOADS = "never";
+              # Make the C++ runtime available to the pandas/matplotlib wheels.
+              LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+                pkgs.stdenv.cc.cc.lib
+                pkgs.zlib
+              ];
             };
 
             shellHook = ''

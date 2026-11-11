@@ -1,0 +1,26 @@
+{% extends "club/base.html" %}
+
+{% block title %}{{ week.title }} · Movie Club{% endblock %}
+
+{% block content %}
+  <p class="back-link"><a class="text-link" href="{% url 'archive' %}">← Back to the archive</a></p>
+
+  <section class="detail-hero">
+    <div class="detail-poster">
+      <div class="poster-fallback" aria-hidden="true">{{ week.title|first }}</div>
+    </div>
+    <div>
+      <p class="eyebrow">Unmatched pick</p>
+      <h1>{{ week.title }}</h1>
+      <div class="meta-row">
+        {% if week.starts_on and week.ends_on %}
+          <span>{{ week.starts_on|date:"M j, Y" }} – {{ week.ends_on|date:"M j, Y" }}</span>
+        {% elif week.period_label %}
+          <span>{{ week.period_label }}</span>
+        {% endif %}
+      </div>
+      <p class="lede">This pick has not been matched to a TMDB movie yet. Add a TMDB ID below to load its details.</p>
+      {% include "club/_tmdb_fix_form.html" with week=week redirect="week" %}
+    </div>
+  </section>
+{% endblock %}

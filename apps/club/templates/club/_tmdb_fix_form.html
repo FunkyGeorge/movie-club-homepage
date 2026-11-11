@@ -1,0 +1,42 @@
+{% if week or weeks %}
+  <details class="tmdb-fix">
+    <summary class="button button-ghost">Wrong movie? Update TMDB ID</summary>
+    <form class="tmdb-fix-form" method="post" action="{% url 'update-tmdb' %}">
+      {% csrf_token %}
+      <input type="hidden" name="redirect" value="{{ redirect|default:'detail' }}">
+      {% if movie %}
+        <input type="hidden" name="return_tmdb_id" value="{{ movie.tmdb_id }}">
+      {% endif %}
+
+      {% if week %}
+        <input type="hidden" name="week_id" value="{{ week.pk }}">
+      {% elif weeks|length > 1 %}
+        <label class="field">
+          <span>Pick</span>
+          <select name="week_id">
+            {% for item in weeks %}
+              <option value="{{ item.pk }}">
+                {% if item.starts_on and item.ends_on %}
+                  {{ item.starts_on|date:"M j, Y" }} – {{ item.ends_on|date:"M j, Y" }}
+                {% elif item.period_label %}
+                  {{ item.period_label }}
+                {% else %}
+                  Pick {{ item.pk }}
+                {% endif %}
+              </option>
+            {% endfor %}
+          </select>
+        </label>
+      {% else %}
+        <input type="hidden" name="week_id" value="{{ weeks.0.pk }}">
+      {% endif %}
+
+      <label class="field">
+        <span>New TMDB ID</span>
+        <input type="number" name="tmdb_id" min="1" step="1" inputmode="numeric" required placeholder="e.g. 603" autocomplete="off">
+      </label>
+      <button class="button" type="submit">Update match</button>
+    </form>
+    <p class="form-help">Only the selected pick changes. TMDB details are fetched again automatically.</p>
+  </details>
+{% endif %}

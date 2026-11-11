@@ -1,0 +1,133 @@
+{% extends "club/base.html" %}
+
+{% block title %}Movie Club · Weekly picks{% endblock %}
+
+{% block content %}
+  {% if current %}
+    <section class="hero">
+      <div class="hero-poster">
+        {% if current.movie.poster_url %}
+          <img src="{{ current.movie.poster_url }}" alt="" width="500" height="750" fetchpriority="high">
+        {% else %}
+          <div class="poster-fallback" aria-hidden="true">{{ current.movie.title|first }}</div>
+        {% endif %}
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow">{% if current_is_active %}Now showing{% else %}Latest pick{% endif %}</p>
+        <h1>{{ current.movie.title }}</h1>
+        <div class="meta-row">
+          {% if current.movie.release_date %}<span>{{ current.movie.release_date.year }}</span>{% endif %}
+          {% if current.movie.runtime %}<span>{{ current.movie.runtime }} min</span>{% endif %}
+          {% if current.starts_on and current.ends_on %}
+            <span>{{ current.starts_on|date:"M j, Y" }} – {{ current.ends_on|date:"M j, Y" }}</span>
+          {% elif current.period_label %}
+            <span>{{ current.period_label }}</span>
+          {% endif %}
+        </div>
+        <p class="genre-line">
+          {% for genre in current.movie.genres.all %}
+            <span class="tag">{{ genre.name }}</span>
+          {% empty %}
+            <span class="tag">Genre pending</span>
+          {% endfor %}
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="{% url 'movie-detail' current.movie.tmdb_id %}">Movie details</a>
+          <a class="button button-ghost" href="{% url 'archive' %}">Browse the archive</a>
+        </div>
+        {% include "club/_tmdb_fix_form.html" with week=current movie=current.movie redirect="home" %}
+      </div>
+      <aside class="hero-panel" aria-label="Club at a glance">
+        <p class="panel-label">Club at a glance</p>
+        <dl class="stat-list">
+          <div>
+            <dt>Picks</dt>
+            <dd>{{ stats.total_picks }}</dd>
+          </div>
+          <div>
+            <dt>Unique movies</dt>
+            <dd>{{ stats.unique_movies }}</dd>
+          </div>
+          <div>
+            <dt>Active members</dt>
+            <dd>{{ stats.members }}</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
+  {% else %}
+    <section class="hero hero-empty">
+      <p class="eyebrow">Movie Club</p>
+      <h1>The archive is waiting for its first pick.</h1>
+      <p class="lede">Once the club selects a movie, it will appear here.</p>
+    </section>
+  {% endif %}
+
+  {% if recent_weeks %}
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Recently watched</p>
+          <h2>Previous picks</h2>
+        </div>
+        <a class="text-link" href="{% url 'archive' %}">View all picks</a>
+      </div>
+      <div class="movie-grid">
+        {% for week in recent_weeks %}
+          {% include "club/_movie_card.html" with week=week %}
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+
+  <section class="section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">By the numbers</p>
+        <h2>The club so far</h2>
+      </div>
+      <a class="text-link" href="{% url 'stats' %}">More stats</a>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-value">{{ stats.total_picks }}</span>
+        <span class="stat-label">Picks</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">{{ stats.unique_movies }}</span>
+        <span class="stat-label">Unique movies</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">{{ stats.average_runtime|floatformat:0 }}</span>
+        <span class="stat-label">Average runtime, minutes</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">{{ stats.members }}</span>
+        <span class="stat-label">Active members</span>
+      </div>
+    </div>
+    {% if stats.top_genres %}
+      <div class="genre-strip">
+        <span class="strip-label">Most-picked genres</span>
+        {% for genre in stats.top_genres %}
+          <span class="tag tag-strong">{{ genre.name }} <small>{{ genre.count }}</small></span>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </section>
+
+  <section class="join-panel">
+    <div>
+      <p class="eyebrow">Interested?</p>
+      <h2>Pull up a chair.</h2>
+      <p>The club keeps a public archive of every movie it has watched, without publishing who picked what.</p>
+    </div>
+    <div>
+      {% if join_url %}
+        <a class="button" href="{{ join_url }}">Join the club</a>
+      {% else %}
+        <a class="button button-ghost" href="{% url 'about' %}">How to join</a>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% load static %}
+<article class="movie-card">
+  {% if week.movie %}
+    <a class="movie-card-link" href="{% url 'movie-detail' week.movie.tmdb_id %}">
+  {% else %}
+    <a class="movie-card-link movie-card-unmatched" href="{% url 'week-detail' week.pk %}">
+  {% endif %}
+    <div class="card-poster">
+      {% if week.movie %}
+        {% if week.movie.poster_url %}
+          <img src="{{ week.movie.poster_url }}" alt="" width="342" height="513" loading="lazy">
+        {% else %}
+          <div class="poster-fallback" aria-hidden="true">{{ week.movie.title|first }}</div>
+        {% endif %}
+      {% else %}
+        <div class="poster-fallback" aria-hidden="true">{{ week.title|first }}</div>
+      {% endif %}
+    </div>
+    <div class="card-body">
+      <div class="card-topline">
+        {% if week.movie %}
+          {% if week.movie.release_date %}<span>{{ week.movie.release_date.year }}</span>{% endif %}
+          {% if week.movie.runtime %}<span>{{ week.movie.runtime }} min</span>{% endif %}
+        {% endif %}
+      </div>
+      <h3>{% if week.movie %}{{ week.movie.title }}{% else %}{{ week.title }}{% endif %}</h3>
+      <p class="card-genres">
+        {% if week.movie %}
+          {% for genre in week.movie.genres.all %}
+            {{ genre.name }}{% if not forloop.last %} · {% endif %}
+          {% empty %}
+            Genre pending
+          {% endfor %}
+        {% endif %}
+      </p>
+      <p class="card-dates">
+        {% if week.starts_on and week.ends_on %}
+          {{ week.starts_on|date:"M j, Y" }} – {{ week.ends_on|date:"M j, Y" }}
+        {% elif week.period_label %}
+          {{ week.period_label }}
+        {% endif %}
+      </p>
+    </div>
+  </a>
+</article>

@@ -38,6 +38,10 @@ def mock_matrix_match():
                 "id": 603,
                 "title": "The Matrix",
                 "release_date": "1999-03-31",
+                "poster_path": "/matrix.jpg",
+                "runtime": 136,
+                "budget": 63000000,
+                "revenue": 467222728,
                 "genres": [
                     {"id": 28, "name": "Action"},
                     {"id": 878, "name": "Science Fiction"},
@@ -78,6 +82,10 @@ def test_create_week_matches_tmdb(client, db, tmdb_settings, bot_headers, payloa
     assert data["movie"]["tmdb_id"] == 603
     assert data["movie"]["title"] == "The Matrix"
     assert data["movie"]["release_date"] == "1999-03-31"
+    assert data["movie"]["poster_url"] == "https://image.tmdb.org/t/p/w500/matrix.jpg"
+    assert data["movie"]["runtime"] == 136
+    assert data["movie"]["budget"] == 63000000
+    assert data["movie"]["revenue"] == 467222728
     assert data["movie"]["genres"] == ["Action", "Science Fiction"]
     assert data["selected_by"]["discord_id"] == "123"
 

@@ -12,7 +12,16 @@ class GenreAdmin(admin.ModelAdmin):
 
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
-    list_display = ("title", "tmdb_id", "release_date", "last_synced_at", "sync_error")
+    list_display = (
+        "title",
+        "tmdb_id",
+        "release_date",
+        "runtime",
+        "budget",
+        "revenue",
+        "last_synced_at",
+        "sync_error",
+    )
     search_fields = ("title",)
     filter_horizontal = ("genres",)
     readonly_fields = ("last_synced_at", "sync_error")

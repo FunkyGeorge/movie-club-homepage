@@ -1,0 +1,71 @@
+{% extends "club/base.html" %}
+{% load static %}
+
+{% block title %}Stats · Movie Club{% endblock %}
+
+{% block content %}
+  <section class="page-heading">
+    <p class="eyebrow">The shape of the club</p>
+    <h1>Stats</h1>
+    <p class="lede">Numbers from every matched pick. Member-level detail stays private.</p>
+  </section>
+
+  <div class="stats-grid stats-grid-large">
+    <div class="stat-card">
+      <span class="stat-value">{{ stats.total_picks }}</span>
+      <span class="stat-label">Picks</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value">{{ stats.unique_movies }}</span>
+      <span class="stat-label">Unique movies</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value">{{ stats.average_runtime|floatformat:0 }}</span>
+      <span class="stat-label">Average runtime, minutes</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value">{{ stats.members }}</span>
+      <span class="stat-label">Active members</span>
+    </div>
+  </div>
+
+  {% if stats.top_genres %}
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Most selected</p>
+          <h2>Top genres</h2>
+        </div>
+      </div>
+      <div class="genre-strip">
+        {% for genre in stats.top_genres %}
+          <span class="tag tag-strong">{{ genre.name }} <small>{{ genre.count }}</small></span>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+
+  <section class="section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Visualized</p>
+        <h2>Club charts</h2>
+      </div>
+      <a class="text-link" href="{% url 'archive' %}">Browse the archive</a>
+    </div>
+    <div class="chart-grid">
+      {% if genre_chart_available %}
+        <figure class="chart-card">
+          <img src="{% static 'charts/genre-pie.png' %}" alt="Pie chart of the club's picks by genre">
+          <figcaption>Genre mix across matched weeks</figcaption>
+        </figure>
+      {% endif %}
+      {% if release_year_chart_available %}
+        <figure class="chart-card">
+          <img src="{% static 'charts/release-years.png' %}" alt="Line chart of movie picks by release year">
+          <figcaption>Movie picks by release year</figcaption>
+        </figure>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

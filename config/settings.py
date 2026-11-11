@@ -78,8 +78,9 @@ TIME_ZONE = env("CLUB_TIMEZONE", default="UTC")
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -87,6 +88,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 BOT_API_TOKEN = env("BOT_API_TOKEN", default="")
 TMDB_READ_ACCESS_TOKEN = env("TMDB_READ_ACCESS_TOKEN", default="")
 TMDB_API_BASE_URL = env("TMDB_API_BASE_URL", default="https://api.themoviedb.org/3")
+TMDB_IMAGE_BASE_URL = env("TMDB_IMAGE_BASE_URL", default="https://image.tmdb.org/t/p/w500")
+CLUB_JOIN_URL = env("CLUB_JOIN_URL", default="")
 
 LOGGING = {
     "version": 1,

@@ -1,0 +1,46 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Movie Club{% endblock %}</title>
+  <meta name="description" content="{% block description %}A weekly movie club and its public, anonymous archive of picks.{% endblock %}">
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="{% url 'home' %}">
+        <span class="brand-mark" aria-hidden="true">MC</span>
+        <span>Movie Club</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="{% url 'home' %}" {% if request.resolver_match.url_name == "home" %}class="active" aria-current="page"{% endif %}>Home</a>
+        <a href="{% url 'archive' %}" {% if request.resolver_match.url_name == "archive" or request.resolver_match.url_name == "movie-detail" %}class="active" aria-current="page"{% endif %}>Archive</a>
+        <a href="{% url 'stats' %}" {% if request.resolver_match.url_name == "stats" %}class="active" aria-current="page"{% endif %}>Stats</a>
+        <a href="{% url 'about' %}" {% if request.resolver_match.url_name == "about" %}class="active" aria-current="page"{% endif %}>About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap site-main">
+    {% if messages %}
+      <div class="message-list" role="status">
+        {% for message in messages %}
+          <p class="message {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p>Movie Club · a weekly pick and a public archive.</p>
+      <p>Movie data from TMDB.</p>
+    </div>
+  </footer>
+</body>
+</html>

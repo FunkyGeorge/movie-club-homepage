@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 
@@ -16,6 +17,27 @@ class Movie(models.Model):
     tmdb_id = models.PositiveIntegerField(unique=True)
     title = models.CharField(max_length=255)
     release_date = models.DateField(null=True, blank=True)
+    poster_path = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text="TMDB poster path, e.g. /abc123.jpg.",
+    )
+    runtime = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+        help_text="Runtime in minutes.",
+    )
+    budget = models.PositiveBigIntegerField(
+        null=True,
+        blank=True,
+        help_text="Budget in USD.",
+    )
+    revenue = models.PositiveBigIntegerField(
+        null=True,
+        blank=True,
+        help_text="Worldwide box office revenue in USD.",
+    )
     last_synced_at = models.DateTimeField(null=True, blank=True)
     sync_error = models.TextField(blank=True, default="")
     genres = models.ManyToManyField(Genre, related_name="movies", blank=True)
@@ -25,6 +47,12 @@ class Movie(models.Model):
 
     def __str__(self) -> str:
         return f"{self.title} ({self.tmdb_id})"
+
+    @property
+    def poster_url(self) -> str | None:
+        if not self.poster_path:
+            return None
+        return f"{settings.TMDB_IMAGE_BASE_URL.rstrip('/')}{self.poster_path}"
 
     def save(self, *args, **kwargs):
         old_tmdb_id = None

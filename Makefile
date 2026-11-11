@@ -1,8 +1,9 @@
 PGDATA ?= .pgdata
 PGPORT ?= 5433
 DB_NAME ?= movieclub
+EXCLUDE ?=
 
-.PHONY: db-init db-start db-stop db-create migrate dev test lint fmt
+.PHONY: db-init db-start db-stop db-create migrate dev test lint fmt chart-genres chart-release-years chart-favorite-genres chart-genre-share public-charts
 
 db-init:
 	@test -d $(PGDATA) || initdb -D $(PGDATA) --auth=trust
@@ -33,3 +34,20 @@ lint:
 
 fmt:
 	ruff format .
+
+chart-genres: db-create
+	uv run python scripts/genre_pie_chart.py
+
+chart-release-years: db-create
+	uv run python scripts/release_year_line_chart.py
+
+chart-favorite-genres: db-create
+	uv run python scripts/member_favorite_genre_chart.py $(if $(EXCLUDE),--exclude "$(EXCLUDE)",)
+
+chart-genre-share: db-create
+	uv run python scripts/genre_share_heatmap.py
+
+public-charts: db-create
+	mkdir -p static/charts
+	uv run python scripts/genre_pie_chart.py --output static/charts/genre-pie.png
+	uv run python scripts/release_year_line_chart.py --output static/charts/release-years.png
